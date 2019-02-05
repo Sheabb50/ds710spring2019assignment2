@@ -1,0 +1,68 @@
+---
+title: "Assignment 2--R"
+author: "Sherri Abbott"
+date: "February 1, 2019"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Control flow:  Airport statistics
+
+If your code uses any libraries, load them here.
+```{r}
+library(readr)
+```
+
+a. Download the data set `airport.csv`.  Read it into R and display the first few lines of data.
+
+```{r}
+airport = read_csv("airport.csv")
+```
+
+This data set contains data on all 135 medium and large airports in the US in 1990.  
+
+(Dataset:  "US Airport Statistics," submitted by Larry Winner, University of Florida.   Dataset obtained from the Journal of Statistics Education (http://www.amstat.org/publications/jse). Accessed 3 June 2015. Used by permission of author.) 
+
+b. **Use control flow** to print a list of airports at which the number of scheduled departures was less than the number of departures performed.
+
+- The point of this assignment is to demonstrate your understanding of control flow, so please use control flow to solve this problem.
+
+```{r}
+numRows = dim(airport)[1]
+for(ap_index in 1:numRows){ #iterate over airports
+  if(airport$`Scheduled Departures`[ap_index] < airport$`Performed Departures`[ap_index]){ #check if scheduled departures is less than actual departures
+    print(airport$Airport[ap_index])
+  } #end of iteration over airports
+} #end "check departures"
+```
+
+c. **Use control flow** to find the average (mean) number of passengers on flights from all the airports in part b.
+
+- Your result should be 1 number:  The total number of passengers from all of the specified airports, divided by the total number of performed departures from all of the specified airports.
+
+- The point of this assignment is to demonstrate your understanding of control flow, so please use control flow to solve this problem.
+
+```{r}
+num_pass = 0
+num_dep = 0
+numRows = dim(airport)[1]
+for (ap_index in 1:numRows){ #iterate over airports
+  if(airport$`Scheduled Departures`[ap_index] < airport$`Performed Departures`[ap_index]){ #check scheduled departures that are less than performed departures
+   num_pass = num_pass + airport$Passengers[ap_index] #assign number of passengers to vector
+     num_dep = num_dep + airport$`Performed Departures`[ap_index] #assign number of performed departures to vector
+   } #end of iteration over airports
+      } #end "check departures"
+num_pass/num_dep
+```
+
+d.  Optional: 	If you know a more efficient way to do parts b and c in R, that's great!  Do that here and use the result to check your work.  (If you don't know a more efficient way, that's fine.  We'll discuss methods of writing efficient code later in the course.)
+```{r}
+
+```
+
+-	Submit your .Rmd file and knitted .pdf or .docx file (.pdf preferred) to GitHub.
